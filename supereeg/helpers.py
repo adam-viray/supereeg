@@ -1599,7 +1599,7 @@ def _brain_to_nifti(bo, nii_template, antialiasing=False): #FIXME: this is incre
     """
     from .nifti import Nifti
 
-    hdr = nii_template.get_header()
+    hdr = nii_template.header
     temp_v_size = hdr.get_zooms()[0:3]
 
     R = bo.locs # get_locs()
@@ -1696,7 +1696,7 @@ def _brain_to_nifti2(bo, nii_template): #FIXME: this is incredibly inefficient; 
     """
     from .nifti import Nifti2
 
-    hdr = nii_template.get_header()
+    hdr = nii_template.header
     temp_v_size = hdr.get_zooms()[0:3]
 
     R = bo.locs

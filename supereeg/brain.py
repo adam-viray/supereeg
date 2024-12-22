@@ -599,7 +599,7 @@ class Brain(object):
             self.sample_rate = sample_rate
 
 
-        hdr = img.get_header()
+        hdr = img.header
         temp_v_size = hdr.get_zooms()[0:3]
 
         if not np.array_equiv(temp_v_size, v_size):
@@ -702,7 +702,7 @@ class Brain(object):
             self.sample_rate = sample_rate
 
 
-        hdr = img.get_header()
+        hdr = img.header
         temp_v_size = hdr.get_zooms()[0:3]
 
         if not np.array_equiv(temp_v_size, v_size):
