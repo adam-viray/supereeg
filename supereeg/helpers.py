@@ -683,16 +683,16 @@ def _timeseries_recon(bo, mo, chunk_size=25000, preprocess='zscore', recon_loc_i
 
 
     if recon_loc_inds:
-        combined_data = np.zeros((data.shape[0], len(recon_loc_inds)), dtype=data.dtype)
+        combined_data = np.zeros((data.shape[0], len(recon_loc_inds)), dtype=np.float64)
 
         for x in filter_chunks:
             try:
-                combined_data[x,range(len(recon_loc_inds))] = _reconstruct_activity(data[x, :], Kba, Kaa_inv, recon_loc_inds=recon_loc_inds)
+                combined_data[x,range(len(recon_loc_inds))] = _reconstruct_activity(data.iloc[x, :], Kba, Kaa_inv, recon_loc_inds=recon_loc_inds)
             except:
                 print('issue with chunksize: ' + str(x))
     else:
-        combined_data = np.zeros((data.shape[0], K.shape[0]), dtype=data.dtype)
-        combined_data[:, unknown_inds] = np.vstack(list(map(lambda x: _reconstruct_activity(data[x, :], Kba, Kaa_inv),
+        combined_data = np.zeros((data.shape[0], K.shape[0]), dtype=np.float64)
+        combined_data[:, unknown_inds] = np.vstack(list(map(lambda x: _reconstruct_activity(data.iloc[x, :], Kba, Kaa_inv),
                                                             filter_chunks)))
         combined_data[:, known_inds] = data
 
