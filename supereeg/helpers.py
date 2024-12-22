@@ -230,7 +230,7 @@ def _get_corrmat(bo):
         return p + n
 
     def zcorr_xform(bo):
-        return np.multiply(bo.dur, _r2z(1 - squareform(pdist(np.asanyarray(bo.dataobj).T, 'correlation'))))
+        return np.multiply(bo.dur, _r2z(1 - squareform(pdist(bo.get_data().T, 'correlation'))))
 
     summed_zcorrs = _apply_by_file_index(bo, zcorr_xform, aggregate)
 
@@ -254,7 +254,7 @@ def _z_score(bo):
 
     """
     def z_score_xform(bo):
-        return zscore(np.asanyarray(bo.dataobj))
+        return zscore(bo.get_data())
 
     def vstack_aggregrate(x1, x2):
         return np.vstack((x1, x2))
@@ -629,13 +629,13 @@ def _timeseries_recon(bo, mo, chunk_size=25000, preprocess='zscore', recon_loc_i
         Compiled reconstructed timeseries
     """
     if preprocess==None:
-        data = np.asanyarray(bo.dataobj).values
+        data = bo.get_data().values
     elif preprocess=='zscore':
         if bo.data.shape[0]<3:
             warnings.warn('Not enough samples to zscore so it will be skipped.'
             ' Note that this will cause problems if your data are not already '
             'zscored.')
-            data = np.asanyarray(bo.dataobj).values
+            data = bo.get_data().values
         else:
             data = bo.get_zscore_data()
     else:
