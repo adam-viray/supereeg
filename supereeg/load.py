@@ -125,18 +125,18 @@ def _convert(data, return_type, vox_size):
             warnings.warn('Data is not a Nifti file, therefore vox_size was not computed '
                           ' Please specify nii as return_type if you would like a Nifti returned.')
             return data
-    elif return_type is 'nii':
+    elif return_type == 'nii':
         if type(data) is not Nifti:
             data = Nifti(data)
         if vox_size:
             return _resample_nii(data, target_res=vox_size)
         else:
             return data
-    elif return_type is 'bo':
+    elif return_type == 'bo':
         if type(data) is not Brain:
             data = Brain(data)
         return data
-    elif return_type is 'mo':
+    elif return_type == 'mo':
         if type(data) is not Model:
             data = Model(data)
         return data
@@ -226,12 +226,12 @@ def _load_from_cache(fname, ftype, sample_inds=None, loc_inds=None, field=None):
             return _load_field(fullpath, field)
         else:
             raise ValueError("Can only load field from Brain or Model object.")
-    elif ftype is 'bo':
+    elif ftype == 'bo':
         if sample_inds is not None or loc_inds is not None:
             return Brain(**_load_slice(fullpath, sample_inds, loc_inds))
         else:
             return Brain(**dd.io.load(fullpath))
-    elif ftype is 'mo':
+    elif ftype == 'mo':
         # if the model was created using supereeg<0.2.0, load using the "old" format
         # (i.e. supereeg>=0.2.0 computes model in log space)
         date_created = _load_field(fullpath, field='date_created')
@@ -243,9 +243,9 @@ def _load_from_cache(fname, ftype, sample_inds=None, loc_inds=None, field=None):
             return Model(data=np.divide(num, den), locs=locs, n_subs=n_subs)
         else:
             return Model(**dd.io.load(fullpath))
-    elif ftype is 'nii':
+    elif ftype == 'nii':
         return Nifti(fullpath)
-    elif ftype is 'locs':
+    elif ftype == 'locs':
         return Location(fullpath)
 
 
