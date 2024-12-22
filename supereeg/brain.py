@@ -162,7 +162,7 @@ class Brain(object):
             elif sessions is None:
                 self.sessions = pd.Series([1 for i in range(self.data.shape[0])])
             else:
-                self.sessions = pd.Series(sessions.ravel())
+                self.sessions = pd.Series(sessions)
 
             if type(sample_rate) in [int, float]:
                 self.sample_rate = [sample_rate]*len(self.sessions.unique())
